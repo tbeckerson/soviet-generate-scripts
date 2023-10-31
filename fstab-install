@@ -1,0 +1,5 @@
+LABEL=sovietlinux	    /	    btrfs	compress=zstd,subvol=soviet-rootfs 0 0
+LABEL=sovietlinux	    /usr    btrfs	compress=zstd,subvol=soviet-rootfs/.usr-23xxxx 0 0
+LABEL=sovietlinux	    /home   btrfs	compress=zstd,subvol=home 0 0
+LABEL=sovietlinux	    /var    btrfs	compress=zstd,subvol=var 0 0
+LABEL=SOVIET-EFI    	/efi	vfat	rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 0

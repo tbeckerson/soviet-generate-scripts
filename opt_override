@@ -1,0 +1,4 @@
+gcc            noOpt
+grub           noOpt
+glibc	O2pipe
+expect	O2pipe

@@ -1,0 +1,18 @@
+# Pierre Labastie from O3pipe: 12/20/2011
+#####
+#
+# MODE O2pipex86 configuration
+#
+# Usage: - Apply optimization string to each variable
+#        - "unset" will cause the variable to be not set
+#          instead of just set to null.
+#
+#####
+
+CFLAGS_O2pipex86="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection"
+CXXFLAGS_O2pipex86="$CFLAGS_O2pipex86 -Wp,-D_GLIBCXX_ASSERTIONS" 
+LDFLAGS_O2pipex86="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
+
+OTHER_CFLAGS_O2pipex86=$CFLAGS_O2pipex86
+OTHER_CXXFLAGS_O2pipex86=$CXXFLAGS_O2pipex86
+OTHER_LDFLAGS_O2pipex86=$LDFLAGS_O2pipex86

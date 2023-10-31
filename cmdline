@@ -1,0 +1,5 @@
+rootflags=subvol=soviet-rootfs
+swap.enabled=0
+rw
+quiet
+splash

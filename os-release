@@ -1,0 +1,9 @@
+NAME=Soviet
+ID=sovietlinux
+VERSION="Vanguard"
+VERSION_ID=23xxxx
+PRETTY_NAME="Soviet Linux - Vanguard"
+ANSI_COLOR="0;31"
+HOME_URL="https://sovietlinux.org"
+VARIANT="systemd-sysext"
+VARIANT_ID="23xxxx"

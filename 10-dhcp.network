@@ -1,0 +1,13 @@
+[Match]
+Name=en*
+
+[Network]
+DHCP=yes
+
+[DHCPv4]
+UseDNS=yes
+RouteMetric=10
+
+[IPv6AcceptRA]
+RouteMetric=10
+

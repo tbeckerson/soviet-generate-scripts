@@ -1,0 +1,12 @@
+[Match]
+Name=wl*
+
+[Network]
+DHCP=yes
+
+[DHCPv4]
+UseDNS=yes
+RouteMetric=20
+
+[IPv6AcceptRA]
+RouteMetric=20

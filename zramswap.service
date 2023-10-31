@@ -1,0 +1,12 @@
+[Unit]
+Description=Zram-based swap (compressed RAM block devices)
+Documentation=https://forum.manjaro.org/t/improved-zramswap/34767
+
+[Service]
+Type=oneshot
+ExecStart=/etc/systemd/system/zramctrl start
+ExecStop=/etc/systemd/system/zramctrl stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
