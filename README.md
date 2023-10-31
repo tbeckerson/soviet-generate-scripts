@@ -1,3 +1,2 @@
 # soviet-generate-scripts
-scripts to generate the core soviet linux distro
-setup instructions coming soon
+scripts to generate the core soviet linux distro, setup instructions coming soon
