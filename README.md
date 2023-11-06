@@ -21,7 +21,7 @@ The main file is *lfs-generate.sh.* It's the only file that the user should need
 
 *lfs-base-install.sh* is itself a wrapper around the ALFS script. It modifies the jhalfs script to remove all the user input, and uses a pre-built configuration file. It also modifies several of the programs that are installed to better fit the *soviet* layout.
 *lfs-prep.ext.sh* copies all the necessary files for the BLFS stage into the new LFS build, created in the *lfs-base-install* stage.
-*lfs-extended.sh* installs ~55 programs from the BLFS tools, and another ~20 manually installed files. These are a variety of useful utilities, and functionality for systemd.
+*lfs-extended.sh* installs ~55 programs using the BLFS scripts, and another ~20 manually installed files. These are a variety of useful utilities, and functionality for systemd.
 *lfs-cleanup.sh* adds a small number of files that couldn't be added during *lfs-prep-ext,* and removes all build files from the final soviet build.
 
 ## layout
@@ -30,14 +30,16 @@ This script uses 2 full linux builds to create the 3rd, new *soviet* build:
 - a pre-existing *soviet* release to run *lfs-base-install.sh*. This is located within the host file system.
 - The new *soviet* build runs *lfs-extended.sh* within it's own nspawn. This is inside the pre-existing *soviet* distro.
 
-```The layout looks like this (default example):
+The layout looks like this (default example):
+```
 Host System
 |_(base filesystem)
     |_soviet-builder (holds all the files, _lfs-generate.sh_ will be invoked here)
         |_soviet-generate-scripts (this repository)
         |_sovietlinux-23xxxx (pre-existing _soviet_ bulid)
             |_soviet-build (all the other scripts will be put here)
-                |_build-23xxxx (the new _soviet_ build)```
+                |_build-23xxxx (the new _soviet_ build)
+```
 The *preparation* instructions below assume you're using this layout.
 
 The reason for the pre-existing *soviet* release is this: To make the base LFS system (which is done in _lfs-base-install.sh_) ALFS requires a non-root user with sudo access to work. The default ALFS script will ask several times for your password to elevate privileges. However, since we want an unmonitored script that needs no human intervention, we have two options: add the user password to the scripts so it can be fed to the sudo request when asked, or make a user with NOPASSWD:ALL access that can run commands without asking. Neither option is good for your host system.
@@ -65,8 +67,7 @@ Create your setup:
  - edit the three variables at the beginning of *lfs-generate.sh*
 
 ## running the scripts
-As root, invoking *lfs-generate.sh* should be all that's needed. The script should allow you to resume at the beginning of each stage of the build, with minimal repeated work.
-
+As root, invoking *lfs-generate.sh* should be all that's needed. The script should allow you to resume at the beginning of each stage of the build. A file *build-time* is generated, with the start and finish times.
 
 ## TODO:
 ### high priority
