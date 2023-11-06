@@ -37,7 +37,9 @@ echo type2 >> $LFS_BUILD_DIR/efi/loader/entries.srel
 cp -v zramswap.conf $LFS_BUILD_DIR/etc/
 cp -v zramctl $LFS_BUILD_DIR/etc/systemd/system/
 cp -v zramswap.service $LFS_BUILD_DIR/usr/lib/systemd/system/zramswap.service
-
+## fix problems with LFS's /etc/hosts problem by letting systemd
+## manage the network
+cp -v hosts $LFS_BUILD_DIR/etc
 
 ## os-release and localtime should be relative symlinks, so
 ## remove default files, re-link with custom work

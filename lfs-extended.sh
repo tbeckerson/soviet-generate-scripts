@@ -116,6 +116,9 @@ systemctl enable systemd-homed
 systemctl enable systemd-sysupdate
 ## downloading more ram
 systemctl enable zramswap
+## making sure the networking is correct
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved
 ## these were added during install, but don't need to be activated
 ## by default. systemd or user will activate them if needed.
 systemctl disable acpid

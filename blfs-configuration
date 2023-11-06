@@ -159,7 +159,7 @@ MENU_general-genutils=y
 # CONFIG_iso-codes is not set
 # CONFIG_lsof is not set
 # CONFIG_mandoc is not set
-# CONFIG_pinentry is not set
+CONFIG_pinentry=y
 # CONFIG_screen is not set
 # CONFIG_shared-mime-info is not set
 # CONFIG_sharutils is not set
