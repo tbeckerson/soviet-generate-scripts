@@ -33,12 +33,13 @@ This script uses 2 full linux builds to create the 3rd, new *soviet* build:
 The layout looks like this (default example):
 ```
 Host System
-|_(base filesystem)
-    |_soviet-builder (holds all the files, lfs-generate.sh will be invoked here)
-        |_soviet-generate-scripts (this repository)
-        |_sovietlinux-23xxxx (pre-existing soviet bulid)
-            |_soviet-build (all the other scripts will be put here)
-                |_build-23xxxx (the new soviet build)
+|_ (base filesystem)
+    |_ soviet-builder (holds all the files)
+        |_ lfs-generate.sh
+        |_ soviet-generate-scripts (this repository)
+        |_ sovietlinux-23xxxx (pre-existing soviet bulid)
+            |_ soviet-build (all the other scripts will be put here)
+                |_ build-23xxxx (the new soviet build)
 ```
 The *preparation* instructions below assume you're using this layout.
 
