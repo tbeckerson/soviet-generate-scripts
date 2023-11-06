@@ -1,3 +1,2 @@
 root=live:LABEL=soviet-install
 rd.live.overlay.overlayfs=1
-zswap.enabled=0
