@@ -33,13 +33,12 @@ This script uses 2 full linux builds to create the 3rd, new *soviet* build:
 The layout looks like this (default example):
 ```
 Host System
-|_ (base filesystem)
-    |_ soviet-builder (holds all the files)
-        |_ lfs-generate.sh
-        |_ soviet-generate-scripts (this repository)
-        |_ sovietlinux-23xxxx (pre-existing soviet bulid)
-            |_ soviet-build (all the other scripts will be put here)
-                |_ build-23xxxx (the new soviet build)
+|_(base filesystem)
+    |_soviet-builder (holds all the files, lfs-generate.sh will be invoked here)
+        |_soviet-generate-scripts (this repository)
+        |_sovietlinux-23xxxx (pre-existing soviet bulid)
+            |_soviet-build (all the other scripts will be put here)
+                |_build-23xxxx (the new soviet build)
 ```
 The *preparation* instructions below assume you're using this layout.
 
@@ -85,4 +84,5 @@ As root, invoking *lfs-generate.sh* should be all that's needed. The script shou
 ### low priority
 - uses sed for everything, because that's what LFS uses. But maybe some awk lines would be better?
 - mabye remove some of the seds swap in a pre-made file?
+- script some of the preparation stage (maybe fetch the *-full.tar.xz and do the git cloning?)
 - need to properly comment what sgdisk is doing in *lfs-generate*.
