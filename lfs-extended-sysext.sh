@@ -114,8 +114,14 @@ fi
 touch /manual-complete
 
 ## ready for the official boot
+
+## sysext and confext perform the /var/lib/* overlay
+systemctl enable systemd-sysext
+systemctl enable systemd-confext
 ## homectl
 systemctl enable systemd-homed
+## one day, A/B updates
+systemctl enable systemd-sysupdate
 ## downloading more ram
 systemctl enable zramswap
 ## making sure the networking is correct

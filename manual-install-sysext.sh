@@ -21,7 +21,7 @@ DRACUT_VER="059"
 GNUEFI_VER="3.0.17"
 HELP2MAN_VER="1.49.3"
 RDFIND_VER="1.6.0"
-FIRMWARE_VER="20231111"
+FIRMWARE_VER="20231030"
 SYSTEMD_VER="254"
 
 cd /sources
@@ -155,8 +155,18 @@ cd /tmp/sbsigntools
 cd /tmp
 git clone https://github.com/Soviet-Linux/neofetch.git
 cd /tmp/neofetch
-    make --prefix=/usr install
-cd /tmp
+    make DESTDIR=/var/lib/extensions/neofetch install
+    mkdir -p /var/lib/extensions/neofetch/usr/lib/extension-release.d
+    cat > /var/lib/extensions/neofetch/usr/lib/extension-release.d/extension-release.neofetch << EOF
+    NAME=neofetch
+    ID=sovietlinux
+    VERSION_ID=$LFS_BUILD
+    PRETTY_NAME="Soviet Linux - Neofetch"
+    ANSI_COLOR="0;31"
+    HOME_URL="https://sovietlinux.org"
+    VARIANT="systext Neofetch"
+    VARIANT_ID=$LFS_BUILD
+EOF
 git clone https://github.com/Soviet-Linux/libspm.git
 cd /tmp/libspm
     make all
@@ -167,7 +177,6 @@ cd /tmp
 git clone https://github.com/Soviet-Linux/CCCP.git
 cd /tmp/CCCP
     make PREFIX=/usr install
-
 pip3 install pefile
 pip3 install pyelftools
 
@@ -194,6 +203,7 @@ meson setup \
 -Dsbat-distro-summary='Soviet Linux' \
 -Dsbat-distro-version='Vanguard' \
 -Dsbat-distro-url='https://sovietlinux.org' \
+-Dbpf-framework=true \
       ..
 ninja
 ninja install

@@ -7,8 +7,9 @@ Terms:
     **BLFS** - Beyond Linux From Scratch  
     **ALFS** - Automated Linux from Scratch  
     **jhalfs** - the script run by ALFS  
-    More information about these can be found at https://linuxfromscratch.org  
-    **nspawn** - systemd-nspawn is an advanced chroot style program - https://wiki.archlinux.org/title/Systemd-nspawn for more info.
+    More information about these can be found at https://linuxfromscratch.org   
+    
+   **nspawn** - systemd-nspawn is an advanced chroot style program - https://wiki.archlinux.org/title/Systemd-nspawn for more info.
     
 The scripts primarily function as a wrapper around the pre-existing ALFS and BLFS scripts. This requires some modification of the ALFS and BLFS files, and is an ongoing project to make it reliable against changes from upstream.
 
@@ -33,42 +34,45 @@ This script uses 2 full linux builds to create the 3rd, new *soviet* build:
 The layout looks like this (default example):
 ```
 Host System
-|_(base filesystem)
     |_soviet-builder (holds all the files, lfs-generate.sh will be invoked here)
         |_soviet-generate-scripts (this repository)
         |_sovietlinux-23xxxx (pre-existing soviet bulid)
             |_soviet-build (all the other scripts will be put here)
                 |_build-23xxxx (the new soviet build)
 ```
-The *preparation* instructions below assume you're using this layout.
+The *preparation* instructions below assume you're using this layout, with these names.
 
 The reason for the pre-existing *soviet* layer:  
-To generate the base LFS system (which is done in _lfs-base-install.sh_) ALFS requires a non-root user with sudo access to work. The default ALFS script will ask several times for your password to elevate privileges.  
-However, since we want an unmonitored script that needs no human intervention, we have two options: add the user password to the scripts so it can be fed to the sudo request when asked, or make a user with NOPASSWD:ALL access that can run commands without asking. Neither option is good for your host system.
+The ALFS script requires a non-root user with sudo access to work. It will ask several times for your password to elevate privileges.  
+However, since we want an unmonitored script that needs no human intervention, we have two options: add the user password to the script so it can be feed the sudo request when asked, or make a user with NOPASSWD:ALL access that can run commands without asking. Neither option is good for your host system.
 
-The solution I've chosen is to use the *pre-existing* Soviet Linux build, put the NOPASSWD:ALL user inside the _soviet_ build, and nspawn into that for _lfs-base-install.sh._ This user has root-level access to the nspawn system so it still has security concerns, but your host system will be safe.
+The solution I've chosen is to use the *pre-existing* Soviet Linux build, put the super-privileged NOPASSWD:ALL user inside the _soviet_ build, and nspawn into that for _lfs-base-install.sh._ This user has root-level access to the nspawn system so it still has security concerns, but your host system will be safe.    
+
+*note: a high-priority task is to remove the su check from ALFS, so the whole thing can be run as root and the entire pre-existing soviet layer can be removed.*
 
 
 ## preparation
 The following is required before invoking the _lfs-generate.sh_ script:
 - Your host system needs to have the programs necessary to create a LFS build. See https://linuxfromscratch.org/lfs/view/systemd/chapter02/hostreqs.html for more info.
-- You need a _soviet_ release. Check our Discord in \#testing-releases channel to find the most recent available: https://discord.gg/ZmYAmAXvtX . Grab the *sovietlinux-\*-full.tar.xz* file.
+- You need a _soviet_ release. Check our Discord in \#testing-releases channel to find the most recent available: https://discord.gg/ZmYAmAXvtX . Grab the *sovietlinux-\*-core.tar.xz* file.
 
 Create your setup:
 - create *soviet-builder* somewhere in your host system.
- - In this directory, git clone the *soviet-generate-scripts* repo ( `git clone https://github.com/tbeckerson/soviet-generate-scripts.git`)
-- copy *soviet-generate-scripts/lfs-generate.sh* into the *soviet-builder* directory.
- - edit the three variables at the beginning of *lfs-generate.sh*
+  - In this directory, git clone the *soviet-generate-scripts* repo ( `git clone https://github.com/tbeckerson/soviet-generate-scripts.git`)
+  - copy *soviet-generate-scripts/lfs-generate.sh* into the *soviet-builder* directory.
  - make a subdirectory *sovietlinux-23xxxx*.
-  - extract the *\*-full.tar.xz* file into it.
-- *systemd-nspawn* into the *sovietlinux-23xxxx* directory (as root or sudo, `systemd-nspawn -bD /path/to/sovietlinux-23xxxx` user root, password sovietlinux).
- - in the */soviet-build* directory, clone a fresh version of jhalfs (the ALFS build script): `git clone https://git.linuxfromscratch.org/jhalfs.git jhalfs`
- - create a new group and user named *sovietbuilder*, no special setup required ( `groupadd sovietbuilder; useradd sovietbuilder`)
- - write a new file named */etc/sudoers.d/10-sovietbuilder* with the following content: `sovietbuilder ALL=(ALL) NOPASSWD:ALL`
- - give *sovietbuilder* ownership of all the files in *soviet-build* ( `chown -R sovietbuilder:sovietbuilder /soviet-build`)
- - `poweroff` to exit the nspawn (this does not shut off your computer, despite how it looks.)
+  - extract the *\*-core.tar.xz* file into it.
+- *systemd-nspawn* into the newly created *sovietlinux-23xxxx* directory (as root or sudo, `systemd-nspawn -bD /path/to/sovietlinux-23xxxx` user root, password sovietlinux).
+  - in the */soviet-build* directory, clone a fresh version of jhalfs (the ALFS build script): `git clone https://git.linuxfromscratch.org/jhalfs.git jhalfs`
+  - create a new group and user named *sovietbuilder*, no special setup required ( `groupadd sovietbuilder; useradd sovietbuilder`)
+  - write a new file named */etc/sudoers.d/10-sovietbuilder* with the following content: `sovietbuilder ALL=(ALL) NOPASSWD:ALL`
+  - give *sovietbuilder* ownership of all the files in *soviet-build* ( `chown -R sovietbuilder:sovietbuilder /soviet-build`)
+  - `poweroff` to exit the nspawn (this does not shut off your computer, despite how it looks.)
 - now back in the host system, create a directory name *sovietlinux-23xxxx/soviet-build*.
- - Copy the files from *soviet-generate-scripts* into it.
+  - Copy the files from *soviet-generate-scripts* into it.
+ - edit the three variables at the beginning of *lfs-generate.sh*
+   
+   Ready to GO!
 
 ## running the scripts
 As root, invoking *lfs-generate.sh* should be all that's needed. The script should allow you to resume at the beginning of each stage of the build. A file *build-time* is generated, with the start and finish times.
@@ -76,7 +80,7 @@ As root, invoking *lfs-generate.sh* should be all that's needed. The script shou
 ## TODO:
 ### high priority
 - dig thorough the ALFS code and remove the parts that require being a non-root user, so the entire middle layer distro can be removed.
-- finer grained error handling in *lfs-extended.sh*, the BLFS and manual installs overwrite your progress and re-install everything in their lists.
+- finer grained resume capabilities in *lfs-extended.sh*. The BLFS and manual installs overwrite your progress and re-install everything in their lists.
 ### medium priority
 - some of the seds use line numbers - this could be a problem if the file is changed.
 - better notifications about what the script is doing at any given time. maybe a spinner instead of stdout?

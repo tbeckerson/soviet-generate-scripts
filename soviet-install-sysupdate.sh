@@ -20,7 +20,7 @@ mount ${TARGET}2 -o compress=zstd /mnt
 ## make our new subvolumes
 ## yes, the usr subvolume has the . to hide it by default
 btrfs subvolume create /mnt/soviet-rootfs
-btrfs subvolume create /mnt/usr
+btrfs subvolume create /mnt/soviet-rootfs/.usr-$LFS_BUILD
 btrfs subvolume create /mnt/home
 btrfs subvolume create /mnt/var
 ## make directories to hold our new subvolumes
@@ -29,7 +29,7 @@ mkdir /mnt/soviet-rootfs/{efi,home,usr,var}
 ## unmount the partition, then remount the subvolumes
 umount /mnt
 mount LABEL=sovietlinux -o compress=zstd,subvol=soviet-rootfs /mnt
-mount LABEL=sovietlinux -o compress=zstd,subvol=usr /mnt/usr
+mount LABEL=sovietlinux -o compress=zstd,subvol=soviet-rootfs/.usr-$LFS_BUILD /mnt/usr
 mount LABEL=sovietlinux -o compress=zstd,subvol=home /mnt/home
 mount LABEL=sovietlinux -o compress=zstd,subvol=var /mnt/var
 
@@ -55,6 +55,9 @@ cd /
 systemd-machine-id-setup
 ## core customizations
 systemd-firstboot --setup-machine-id --prompt-locale --prompt-timezone --prompt-keymap --prompt-hostname --prompt-root-password --root-shell=/bin/bash --force
+## use the systemd-provided keys for systemd-sysupdate
+echo 'Adding gpg keys for A/B updates (gpg --import /lib/systemd/import-pubring.gpg)'
+gpg --import /lib/systemd/import-pubring.gpg
 ## systemd recommends this to avoid disk thrashing
 chattr +C /var/log/journal
 ## new initrd using host-only to reduce size

@@ -144,7 +144,67 @@ CONFIG_lzo=y
 # CONFIG_wpebackend-fdo is not set
 # CONFIG_wv is not set
 # CONFIG_xapian is not set
-# MENU_general-graphlib is not set
+MENU_general-graphlib=y
+# CONFIG_aalib is not set
+# CONFIG_babl is not set
+# CONFIG_exiv2 is not set
+# CONFIG_fontconfig is not set
+# CONFIG_freetype2 is not set
+# CONFIG_fribidi is not set
+# CONFIG_gegl is not set
+# CONFIG_giflib is not set
+# CONFIG_glm is not set
+# CONFIG_graphite2 is not set
+# CONFIG_harfbuzz is not set
+# CONFIG_jasper is not set
+# CONFIG_lcms2 is not set
+# CONFIG_libavif is not set
+# CONFIG_libexif is not set
+# CONFIG_libgxps is not set
+# CONFIG_libjpeg is not set
+# CONFIG_libmng is not set
+# CONFIG_libmypaint is not set
+# CONFIG_libpng is not set
+# CONFIG_libraw is not set
+# CONFIG_librsvg is not set
+# CONFIG_libspiro is not set
+# CONFIG_libtiff is not set
+# CONFIG_libwebp is not set
+# CONFIG_mypaint-brushes is not set
+# CONFIG_newt is not set
+# CONFIG_opencv is not set
+# CONFIG_openjpeg2 is not set
+# CONFIG_pixman is not set
+# CONFIG_poppler is not set
+# CONFIG_potrace is not set
+# CONFIG_qpdf is not set
+CONFIG_qrencode=y
+# CONFIG_sassc is not set
+# CONFIG_webp-pixbuf-loader is not set
+# CONFIG_woff2 is not set
+MENU_general-genutils=y
+# CONFIG_asciidoctor is not set
+# CONFIG_bogofilter is not set
+# CONFIG_compface is not set
+# CONFIG_desktop-file-utils is not set
+# CONFIG_dos2unix is not set
+# CONFIG_graphviz is not set
+# CONFIG_gtk-doc is not set
+# CONFIG_highlight is not set
+# CONFIG_ibus is not set
+# CONFIG_imagemagick is not set
+# CONFIG_iso-codes is not set
+# CONFIG_lsof is not set
+# CONFIG_screen is not set
+# CONFIG_shared-mime-info is not set
+# CONFIG_sharutils is not set
+# CONFIG_telepathy-mission-control is not set
+# CONFIG_tidy-html5 is not set
+# CONFIG_time is not set
+# CONFIG_tree is not set
+# CONFIG_unixodbc is not set
+# CONFIG_xdg-dbus-proxy is not set
+# CONFIG_xdg-user-dirs is not set
 MENU_general-genutils=y
 # CONFIG_asciidoctor is not set
 # CONFIG_bogofilter is not set
@@ -204,7 +264,7 @@ CONFIG_pciutils=y
 CONFIG_unrar=y
 # CONFIG_upower is not set
 CONFIG_usbutils=y
-# CONFIG_which is not set
+CONFIG_which=y
 CONFIG_zip=y
 MENU_general-prog=y
 # CONFIG_apache-ant is not set

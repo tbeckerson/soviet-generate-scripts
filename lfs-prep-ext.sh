@@ -21,7 +21,7 @@ cp -v profile $LFS_BUILD_DIR/etc
 cp -v 10-dhcp.network 20-wifi.network $LFS_BUILD_DIR/etc/systemd/network/
 cp -v networkd.conf $LFS_BUILD_DIR/etc/systemd/
 ## for systemd-sysupdate
-cp -v 50-usr.conf 60-efi.conf $LFS_BUILD_DIR/etc/sysupdate.d/
+cp -v 10-usr.conf 20-fstab.conf 30-efi.conf $LFS_BUILD_DIR/etc/sysupdate.d/
 ## for the UKIs
 cp -v cmdline cmdline-installer $LFS_BUILD_DIR/etc/kernel/
 # update fstab-install to correct name
@@ -57,6 +57,7 @@ touch $LFS_BUILD_DIR/etc/netgroup
 ## get blfs ready to pop
 cp -v blfs-configuration $BLFS_DIR/configuration
 sed -i "s/JOBS=XX/JOBS=$PARALLEL/" $BLFS_DIR/configuration
+rm -rf $BLFS_DIR/scripts/*
 ## the stage3 build script
 cp -v lfs-build $LFS_BUILD_DIR
 cp -v lfs-extended.sh $LFS_BUILD_DIR
